@@ -1,0 +1,581 @@
+@page "/"
+@using CaalSite.Content
+@using CaalSite.Components.Shared
+@implements IAsyncDisposable
+@inject IJSRuntime JS
+
+<PageTitle>Centro de Artes Almira Lopes | Dança, Teatro e Arte em Betim</PageTitle>
+<HeadContent>
+    <meta name="description" content="Há 18 anos formando artistas em Betim. Ballet, jazz, contemporâneo, teatro e muito mais para todas as idades. Agende uma aula experimental no CAAL." />
+    <meta name="keywords" content="escola de dança em Betim, ballet Betim, jazz dance Betim, teatro Betim, Centro de Artes Almira Lopes, CAAL" />
+    <meta name="theme-color" content="#111111" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content="Centro de Artes Almira Lopes | Onde a arte ganha vida" />
+    <meta property="og:description" content="Formação artística e pessoal com excelência, acolhimento e 18 anos de história em Betim." />
+    <meta property="og:image" content="@SiteContent.Hero.Src" />
+    <meta property="og:image:alt" content="Bailarinas do Centro de Artes Almira Lopes em cena" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">@((MarkupString)StructuredData)</script>
+</HeadContent>
+
+<a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+
+<header class="site-header" id="site-header">
+    <div class="site-header__progress" aria-hidden="true"><span id="scroll-progress"></span></div>
+    <div class="shell site-header__inner">
+        <a class="brand" href="#inicio" aria-label="Centro de Artes Almira Lopes — início" @onclick="CloseMenu">
+            <img src="@SiteContent.BrandDarkLogo" alt="" width="56" height="56" />
+            <span><strong>Centro de Artes</strong><small>Almira Lopes · Betim</small></span>
+        </a>
+
+        <nav class="desktop-nav" aria-label="Navegação principal">
+            <a href="#sobre">Sobre</a>
+            <a href="#cursos">Cursos</a>
+            <a href="#estrutura">Estrutura</a>
+            <a href="#conquistas">Conquistas</a>
+            <a href="#galeria">Galeria</a>
+        </nav>
+
+        <a class="header-cta" href="@TrialUrl" target="_blank" rel="noopener noreferrer">
+            Aula experimental <span aria-hidden="true">↗</span>
+        </a>
+
+        <button class="menu-toggle"
+                type="button"
+                aria-label="@(_menuOpen ? "Fechar menu" : "Abrir menu")"
+                aria-controls="mobile-navigation"
+                aria-expanded="@(_menuOpen ? "true" : "false")"
+                @onclick="ToggleMenuAsync">
+            <span></span><span></span>
+        </button>
+    </div>
+
+    <nav id="mobile-navigation" class="mobile-nav @(_menuOpen ? "is-open" : null)" aria-label="Navegação para celular" aria-hidden="@(_menuOpen ? "false" : "true")">
+        <div class="shell mobile-nav__links">
+            <a href="#sobre" @onclick="CloseMenu"><span>01</span> Sobre</a>
+            <a href="#cursos" @onclick="CloseMenu"><span>02</span> Cursos</a>
+            <a href="#estrutura" @onclick="CloseMenu"><span>03</span> Estrutura</a>
+            <a href="#conquistas" @onclick="CloseMenu"><span>04</span> Conquistas</a>
+            <a href="#galeria" @onclick="CloseMenu"><span>05</span> Galeria</a>
+            <a href="#contato" @onclick="CloseMenu"><span>06</span> Contato</a>
+            <a class="button button--orange" href="@TrialUrl" target="_blank" rel="noopener noreferrer">Agendar aula experimental</a>
+        </div>
+    </nav>
+</header>
+
+<main id="conteudo">
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+        <div class="hero__media" data-parallax="0.14">
+            <img src="@SiteContent.Hero.Src"
+                 alt="@SiteContent.Hero.Alt"
+                 width="@SiteContent.Hero.Width"
+                 height="@SiteContent.Hero.Height"
+                 fetchpriority="high"
+                 decoding="sync" />
+        </div>
+        <div class="hero__veil" aria-hidden="true"></div>
+        <div class="hero__grain" aria-hidden="true"></div>
+
+        <div class="shell hero__content">
+            <div class="hero__copy">
+                <p class="hero__kicker" data-reveal><span></span> Centro de Artes Almira Lopes · Betim</p>
+                <h1 id="hero-title" data-reveal>
+                    Onde a arte <em>ganha vida</em><br />
+                    e sonhos se transformam<br />
+                    em <span>conquistas.</span>
+                </h1>
+                <p class="hero__lead" data-reveal>
+                    Formação artística com excelência, disciplina e acolhimento —
+                    para cada idade, cada história e cada sonho.
+                </p>
+                <div class="hero__actions" data-reveal>
+                    <a class="button button--orange" href="@TrialUrl" target="_blank" rel="noopener noreferrer">
+                        Agendar aula experimental <span aria-hidden="true">↗</span>
+                    </a>
+                    <a class="button button--glass" href="@WhatsAppUrl" target="_blank" rel="noopener noreferrer">
+                        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2.1.5 4.1 1.6 5.9L.2 24l6.5-1.7a11.8 11.8 0 0 0 5.4 1.4h.1c6.5 0 11.8-5.3 11.8-11.8 0-3.2-1.2-6.1-3.5-8.4Zm-8.4 18.2c-1.7 0-3.4-.5-4.9-1.3l-.4-.2-3.8 1 1-3.7-.2-.4a9.7 9.7 0 1 1 8.3 4.6Zm5.3-7.3c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.2-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-2.1-.9-3.5-1.8-4.9-4.1-.4-.7.4-.6 1-2.1.1-.2 0-.4 0-.6l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.2 2.2.9 3 .9 4.1.8.7-.1 1.7-.7 1.9-1.3.2-.6.2-1.2.2-1.3-.1-.2-.3-.3-.6-.4Z" /></svg>
+                        WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero__rail" aria-label="Destaques do CAAL">
+            <div><strong data-count="18">0</strong><span>anos<br />de história</span></div>
+            <div><strong data-count="20" data-suffix="+">0</strong><span>competições<br />premiadas</span></div>
+            <div><strong>01</strong><span>família<br />artística</span></div>
+        </div>
+
+        <a class="hero__scroll" href="#sobre" aria-label="Rolar para conhecer nossa história">
+            <span>Descubra</span><i aria-hidden="true"></i>
+        </a>
+    </section>
+
+    <div class="manifesto-strip" aria-hidden="true">
+        <div>
+            <span>dança</span><i>✦</i><span>teatro</span><i>✦</i><span>expressão</span><i>✦</i><span>movimento</span><i>✦</i><span>conquista</span><i>✦</i>
+            <span>dança</span><i>✦</i><span>teatro</span><i>✦</i><span>expressão</span><i>✦</i><span>movimento</span><i>✦</i><span>conquista</span><i>✦</i>
+        </div>
+    </div>
+
+    <section class="about section" id="sobre" aria-labelledby="about-title">
+        <div class="shell">
+            <div class="about__intro">
+                <p class="eyebrow" data-reveal><span aria-hidden="true"></span> Nossa história</p>
+                <h2 id="about-title" data-reveal>
+                    Há 18 anos, formamos muito mais do que artistas. Formamos <em>pessoas.</em>
+                </h2>
+            </div>
+
+            <div class="about__grid">
+                <figure class="about__image" data-reveal>
+                    <img src="@SiteContent.About.Src"
+                         alt="@SiteContent.About.Alt"
+                         width="@SiteContent.About.Width"
+                         height="@SiteContent.About.Height"
+                         loading="lazy"
+                         decoding="async" />
+                    <figcaption><span>18</span> anos inspirando<br />artistas em Betim</figcaption>
+                </figure>
+
+                <div class="about__story" data-reveal>
+                    <span class="about__monogram" aria-hidden="true">CAAL</span>
+                    <p class="about__lead">
+                        O Centro de Artes Almira Lopes nasceu de uma paixão: ensinar e inspirar cada aluno a se expressar através da arte.
+                    </p>
+                    <p>
+                        Somos referência no mercado cultural betinense por unir formação artística de alta qualidade ao desenvolvimento técnico e pessoal. Aqui, cada corpo encontra sua linguagem, cada aluno encontra acolhimento e cada conquista é celebrada por todos.
+                    </p>
+                    <p>
+                        Acreditamos na arte como uma poderosa ferramenta de expressão e conexão — por isso estamos sempre procurando novas maneiras de ensinar, aprender e emocionar.
+                    </p>
+                    <a class="text-link" href="#cursos">Encontre seu lugar na arte <span aria-hidden="true">→</span></a>
+                </div>
+            </div>
+
+            <blockquote class="about__quote" data-reveal>
+                <span aria-hidden="true">“</span>
+                A técnica constrói o artista.<br />O acolhimento revela quem ele pode ser.
+            </blockquote>
+        </div>
+    </section>
+
+    <section class="features section section--dark" aria-labelledby="features-title">
+        <div class="shell">
+            <SectionHeading Eyebrow="Por que escolher o CAAL"
+                            Title="Estrutura para aprender.<br><em>Liberdade para criar.</em>"
+                            Description="Uma formação completa nasce do encontro entre método, espaço, experiência e afeto."
+                            Light="true" />
+
+            <div class="features__grid" id="features-title">
+                @foreach (var feature in SiteContent.Features)
+                {
+                    <FeatureCard Feature="feature" />
+                }
+            </div>
+        </div>
+    </section>
+
+    <section class="courses section" id="cursos" aria-labelledby="courses-title">
+        <div class="shell">
+            <div class="courses__heading">
+                <SectionHeading Eyebrow="Cursos"
+                                Title="Toda pessoa tem uma dança<br><em>esperando para acontecer.</em>"
+                                Description="Do primeiro plié à presença de palco: percursos para todas as idades, histórias e níveis de experiência." />
+                <div class="courses__count" aria-label="11 modalidades"><strong>11</strong><span>formas de<br />viver a arte</span></div>
+            </div>
+
+            <div class="courses__grid" id="courses-title">
+                @foreach (var course in SiteContent.Courses)
+                {
+                    <CourseCard Course="course" />
+                }
+            </div>
+
+            <div class="courses__closing" data-reveal>
+                <p>Não sabe por onde começar?</p>
+                <a class="button button--dark" href="@TrialUrl" target="_blank" rel="noopener noreferrer">Vamos descobrir juntos <span aria-hidden="true">↗</span></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="structure section" id="estrutura" aria-labelledby="structure-title">
+        <div class="shell">
+            <SectionHeading Eyebrow="Nossa estrutura"
+                            Title="Espaços pensados para<br><em>o movimento acontecer.</em>"
+                            Description="Duas salas de dança, palco próprio e uma rotina em que cada ambiente participa da formação." />
+
+            <div class="structure__collage" id="structure-title">
+                @for (var i = 0; i < SiteContent.Structure.Count; i++)
+                {
+                    var item = SiteContent.Structure[i];
+                    <figure class="structure-card structure-card--@(i + 1)" data-reveal>
+                        <div class="structure-card__media">
+                            <img src="@item.Src" alt="@item.Alt" width="@item.Width" height="@item.Height" loading="lazy" decoding="async" />
+                            <span aria-hidden="true">0@(i + 1)</span>
+                        </div>
+                        <figcaption>
+                            <h3>@item.Title</h3>
+                            <p>@item.Caption</p>
+                        </figcaption>
+                    </figure>
+                }
+            </div>
+        </div>
+    </section>
+
+    <section class="awards section section--dark" id="conquistas" aria-labelledby="awards-title">
+        <div class="awards__glow" aria-hidden="true"></div>
+        <div class="shell">
+            <div class="awards__top">
+                <SectionHeading Eyebrow="Conquistas"
+                                Title="O palco reconhece<br><em>quem se entrega.</em>"
+                                Description="Em mais de 20 competições, voltamos para casa com medalhas, troféus e a certeza de que dedicação transforma sonhos em resultados."
+                                Light="true" />
+                <div class="awards__number" data-reveal><span>mais de</span><strong data-count="20" data-suffix="+">0</strong><small>competições<br />com premiações</small></div>
+            </div>
+
+            <div class="awards__gallery" id="awards-title">
+                @for (var i = 0; i < SiteContent.Awards.Count; i++)
+                {
+                    var award = SiteContent.Awards[i];
+                    <figure class="award-card award-card--@(i + 1)" data-reveal>
+                        <img src="@award.Src" alt="@award.Alt" width="@award.Width" height="@award.Height" loading="lazy" decoding="async" />
+                        <figcaption>
+                            <span>@award.Category</span>
+                            <h3>@award.Title</h3>
+                            <p>@award.Caption</p>
+                        </figcaption>
+                    </figure>
+                }
+                <aside class="awards__statement" data-reveal>
+                    <span aria-hidden="true">✦</span>
+                    <p>“Cada prêmio celebra o resultado. Mas é o caminho até ele que forma o artista.”</p>
+                </aside>
+            </div>
+
+            <div class="awards__metrics" aria-label="Números do CAAL" data-reveal>
+                <div><strong data-count="18">0</strong><span>anos de constância</span></div>
+                <div><strong data-count="20" data-suffix="+">0</strong><span>competições</span></div>
+                <div><strong data-count="100" data-suffix="%">0</strong><span>com premiações</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="gallery section" id="galeria" aria-labelledby="gallery-title">
+        <div class="shell">
+            <div class="gallery__header">
+                <SectionHeading Eyebrow="Galeria"
+                                Title="Momentos que ainda<br><em>dançam na memória.</em>"
+                                Description="Aulas, encontros, espetáculos e conquistas — registros reais de uma história feita em movimento." />
+
+                <div class="gallery__filters" role="group" aria-label="Filtrar galeria">
+                    @foreach (var filter in SiteContent.GalleryFilters)
+                    {
+                        <button type="button"
+                                class="@(_activeFilter == filter ? "is-active" : null)"
+                                aria-pressed="@(_activeFilter == filter ? "true" : "false")"
+                                @onclick="() => SetFilterAsync(filter)">
+                            @filter
+                        </button>
+                    }
+                </div>
+            </div>
+
+            <div class="gallery__masonry" id="gallery-title">
+                @foreach (var item in FilteredGallery)
+                {
+                    <button type="button" class="gallery-card" @onclick="() => OpenLightboxAsync(item)" data-reveal aria-label="Ampliar: @item.Title">
+                        <span class="gallery-card__media">
+                            <img src="@item.Src"
+                                 alt="@item.Alt"
+                                 width="@item.Width"
+                                 height="@item.Height"
+                                 loading="lazy"
+                                 decoding="async"
+                                 style="object-position: @item.Position" />
+                            <span class="gallery-card__overlay" aria-hidden="true"><i>+</i></span>
+                        </span>
+                        <span class="gallery-card__caption">
+                            <small>@item.Category</small>
+                            <strong>@item.Title</strong>
+                        </span>
+                    </button>
+                }
+            </div>
+        </div>
+    </section>
+
+    <section class="final-cta" aria-labelledby="final-cta-title">
+        <div class="final-cta__media" data-parallax="0.08">
+            <img src="@SiteContent.FinalCta.Src" alt="@SiteContent.FinalCta.Alt" width="@SiteContent.FinalCta.Width" height="@SiteContent.FinalCta.Height" loading="lazy" decoding="async" />
+        </div>
+        <div class="final-cta__overlay" aria-hidden="true"></div>
+        <div class="shell final-cta__content" data-reveal>
+            <p class="eyebrow eyebrow--light"><span aria-hidden="true"></span> Seu lugar é aqui</p>
+            <h2 id="final-cta-title">Venha fazer parte<br />da nossa <em>família artística.</em></h2>
+            <p>Uma aula pode ser o começo de uma nova história.</p>
+            <a class="button button--orange" href="@TrialUrl" target="_blank" rel="noopener noreferrer">Quero viver essa experiência <span aria-hidden="true">↗</span></a>
+        </div>
+    </section>
+
+    <section class="contact section section--dark" id="contato" aria-labelledby="contact-title">
+        <div class="shell">
+            <div class="contact__heading" data-reveal>
+                <p class="eyebrow eyebrow--light"><span aria-hidden="true"></span> Fale com o CAAL</p>
+                <h2 id="contact-title">Vamos dar o<br /><em>primeiro passo?</em></h2>
+                <p>Conte para a gente qual arte faz seus olhos brilharem. Nossa equipe ajuda você a encontrar a turma ideal.</p>
+                <div class="contact__actions">
+                    <a class="button button--orange" href="@TrialUrl" target="_blank" rel="noopener noreferrer">Conversar no WhatsApp <span aria-hidden="true">↗</span></a>
+                    <a class="contact__phone" href="tel:+5531982608540"><small>Telefone</small>@SiteContent.PhoneDisplay</a>
+                </div>
+            </div>
+
+            <div class="contact__details">
+                <article class="contact-card contact-card--address" data-reveal>
+                    <span class="contact-card__icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M12 22s7-6 7-13a7 7 0 1 0-14 0c0 7 7 13 7 13Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                    </span>
+                    <small>Onde estamos</small>
+                    <h3>Rua Amélia Augusta do Nascimento, 24</h3>
+                    <p>Jardim Brasília · Betim/MG · CEP 32671-520</p>
+                    <a href="@SiteContent.MapsUrl" target="_blank" rel="noopener noreferrer">Abrir no Google Maps <span aria-hidden="true">↗</span></a>
+                </article>
+
+                <article class="contact-card contact-card--hours" data-reveal>
+                    <span class="contact-card__icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                    </span>
+                    <small>Horários</small>
+                    <div class="schedule">
+                        @foreach (var item in SiteContent.Schedule)
+                        {
+                            <div class="@(item.Hours == "Fechado" ? "is-closed" : null)"><span>@item.Day</span><strong>@item.Hours</strong></div>
+                        }
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="shell site-footer__top">
+        <div class="site-footer__brand">
+            <img src="@SiteContent.BrandDarkLogo" alt="Centro de Artes Almira Lopes" width="112" height="112" loading="lazy" />
+            <p>Há 18 anos, a arte encontra casa em Betim.</p>
+        </div>
+        <nav aria-label="Links do rodapé">
+            <div><strong>Descubra</strong><a href="#sobre">Nossa história</a><a href="#cursos">Cursos</a><a href="#estrutura">Estrutura</a></div>
+            <div><strong>Conecte-se</strong><a href="@WhatsAppUrl" target="_blank" rel="noopener noreferrer">WhatsApp</a><a href="@SiteContent.MapsUrl" target="_blank" rel="noopener noreferrer">Como chegar</a><a href="tel:+5531982608540">Ligar agora</a></div>
+        </nav>
+    </div>
+    <div class="shell site-footer__bottom">
+        <p>© @DateTime.Now.Year Centro de Artes Almira Lopes. Todos os direitos reservados.</p>
+        <p>Arte · Disciplina · Acolhimento</p>
+    </div>
+</footer>
+
+<a class="floating-whatsapp" href="@WhatsAppUrl" target="_blank" rel="noopener noreferrer" aria-label="Falar com o CAAL no WhatsApp">
+    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2.1.5 4.1 1.6 5.9L.2 24l6.5-1.7a11.8 11.8 0 0 0 5.4 1.4h.1c6.5 0 11.8-5.3 11.8-11.8 0-3.2-1.2-6.1-3.5-8.4Zm-8.4 18.2c-1.7 0-3.4-.5-4.9-1.3l-.4-.2-3.8 1 1-3.7-.2-.4a9.7 9.7 0 1 1 8.3 4.6Zm5.3-7.3c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.2-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-2.1-.9-3.5-1.8-4.9-4.1-.4-.7.4-.6 1-2.1.1-.2 0-.4 0-.6l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.9 5.2 2.2.9 3 .9 4.1.8.7-.1 1.7-.7 1.9-1.3.2-.6.2-1.2.2-1.3-.1-.2-.3-.3-.6-.4Z" /></svg>
+    <span>Fale conosco</span>
+</a>
+
+@if (_selectedImage is not null)
+{
+    <div class="lightbox"
+         role="dialog"
+         aria-modal="true"
+         aria-label="Visualização ampliada da galeria"
+         tabindex="-1"
+         @ref="_lightboxElement"
+         @onkeydown="HandleLightboxKeyDown">
+        <button type="button" class="lightbox__backdrop" @onclick="CloseLightboxAsync" tabindex="-1" aria-label="Fechar imagem"></button>
+        <div class="lightbox__dialog">
+            <div class="lightbox__topbar">
+                <span>@_selectedImage.Category</span>
+                <span>@(CurrentLightboxIndex + 1) / @FilteredGallery.Count</span>
+                <button type="button" @onclick="CloseLightboxAsync" aria-label="Fechar galeria"><span></span><span></span></button>
+            </div>
+            <figure>
+                <img src="@_selectedImage.Src" alt="@_selectedImage.Alt" />
+                <figcaption><h3>@_selectedImage.Title</h3><p>@_selectedImage.Caption</p></figcaption>
+            </figure>
+            @if (FilteredGallery.Count > 1)
+            {
+                <button type="button" class="lightbox__nav lightbox__nav--prev" @onclick="PreviousImage" aria-label="Imagem anterior">←</button>
+                <button type="button" class="lightbox__nav lightbox__nav--next" @onclick="NextImage" aria-label="Próxima imagem">→</button>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    private const string TrialMessage = "Olá! Conheci o CAAL pelo site e gostaria de agendar uma aula experimental.";
+    private const string GeneralMessage = "Olá! Conheci o CAAL pelo site e gostaria de saber mais sobre os cursos.";
+    private const string StructuredData = """
+        {
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          "name": "Centro de Artes Almira Lopes",
+          "alternateName": "CAAL",
+          "description": "Centro de formação artística em Betim com cursos de dança e teatro para todas as idades.",
+          "telephone": "+55 31 98260-8540",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Rua Amélia Augusta do Nascimento, 24",
+            "addressLocality": "Betim",
+            "addressRegion": "MG",
+            "postalCode": "32671-520",
+            "addressCountry": "BR"
+          },
+          "hasMap": "https://maps.app.goo.gl/JQEt8v7VXzqyCsE3A",
+          "openingHoursSpecification": [
+            { "@type": "OpeningHoursSpecification", "dayOfWeek": "Monday", "opens": "17:00", "closes": "21:00" },
+            { "@type": "OpeningHoursSpecification", "dayOfWeek": "Tuesday", "opens": "16:00", "closes": "21:00" },
+            { "@type": "OpeningHoursSpecification", "dayOfWeek": "Wednesday", "opens": "17:00", "closes": "21:30" },
+            { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "17:00", "closes": "21:00" },
+            { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "17:00", "closes": "21:00" },
+            { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "08:00", "closes": "18:00" }
+          ]
+        }
+        """;
+
+    private IJSObjectReference? _module;
+    private ElementReference _lightboxElement;
+    private string _activeFilter = "Todos";
+    private MediaItem? _selectedImage;
+    private bool _menuOpen;
+
+    private string TrialUrl => SiteContent.WhatsAppUrl(TrialMessage);
+    private string WhatsAppUrl => SiteContent.WhatsAppUrl(GeneralMessage);
+    private IReadOnlyList<MediaItem> FilteredGallery => _activeFilter == "Todos"
+        ? SiteContent.Gallery
+        : SiteContent.Gallery.Where(image => image.Category == _activeFilter).ToArray();
+    private int CurrentLightboxIndex
+    {
+        get
+        {
+            if (_selectedImage is null) return -1;
+
+            for (var index = 0; index < FilteredGallery.Count; index++)
+            {
+                if (FilteredGallery[index] == _selectedImage) return index;
+            }
+
+            return -1;
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        _module = await JS.InvokeAsync<IJSObjectReference>("import", "./js/site.js");
+        await _module.InvokeVoidAsync("init");
+    }
+
+    private async Task ToggleMenuAsync()
+    {
+        _menuOpen = !_menuOpen;
+
+        if (_module is not null)
+        {
+            await _module.InvokeVoidAsync("setBodyLock", _menuOpen);
+        }
+    }
+
+    private async Task CloseMenu()
+    {
+        _menuOpen = false;
+
+        if (_module is not null)
+        {
+            await _module.InvokeVoidAsync("setBodyLock", false);
+        }
+    }
+
+    private async Task SetFilterAsync(string filter)
+    {
+        _activeFilter = filter;
+        _selectedImage = null;
+        await InvokeAsync(StateHasChanged);
+
+        if (_module is not null)
+        {
+            await _module.InvokeVoidAsync("refreshReveals");
+        }
+    }
+
+    private async Task OpenLightboxAsync(MediaItem item)
+    {
+        _selectedImage = item;
+        await InvokeAsync(StateHasChanged);
+
+        if (_module is not null)
+        {
+            await _module.InvokeVoidAsync("setBodyLock", true);
+        }
+
+        await _lightboxElement.FocusAsync();
+    }
+
+    private async Task CloseLightboxAsync()
+    {
+        _selectedImage = null;
+
+        if (_module is not null)
+        {
+            await _module.InvokeVoidAsync("setBodyLock", false);
+        }
+    }
+
+    private void PreviousImage()
+    {
+        if (_selectedImage is null || FilteredGallery.Count == 0) return;
+        var index = CurrentLightboxIndex <= 0 ? FilteredGallery.Count - 1 : CurrentLightboxIndex - 1;
+        _selectedImage = FilteredGallery[index];
+    }
+
+    private void NextImage()
+    {
+        if (_selectedImage is null || FilteredGallery.Count == 0) return;
+        var index = CurrentLightboxIndex >= FilteredGallery.Count - 1 ? 0 : CurrentLightboxIndex + 1;
+        _selectedImage = FilteredGallery[index];
+    }
+
+    private async Task HandleLightboxKeyDown(KeyboardEventArgs args)
+    {
+        switch (args.Key)
+        {
+            case "Escape":
+                await CloseLightboxAsync();
+                break;
+            case "ArrowLeft":
+                PreviousImage();
+                break;
+            case "ArrowRight":
+                NextImage();
+                break;
+        }
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_module is null) return;
+
+        try
+        {
+            await _module.InvokeVoidAsync("destroy");
+            await _module.DisposeAsync();
+        }
+        catch (JSDisconnectedException)
+        {
+            // A conexão do circuito pode já ter sido encerrada durante a navegação.
+        }
+    }
+}

@@ -1,0 +1,16 @@
+<div class="section-heading @(Light ? "section-heading--light" : null) @(Centered ? "section-heading--centered" : null)" data-reveal>
+    <p class="eyebrow"><span aria-hidden="true"></span>@Eyebrow</p>
+    <h2>@((MarkupString)Title)</h2>
+    @if (!string.IsNullOrWhiteSpace(Description))
+    {
+        <p class="section-heading__description">@Description</p>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string Eyebrow { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public string Title { get; set; } = string.Empty;
+    [Parameter] public string? Description { get; set; }
+    [Parameter] public bool Light { get; set; }
+    [Parameter] public bool Centered { get; set; }
+}

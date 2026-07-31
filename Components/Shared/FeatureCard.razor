@@ -1,0 +1,12 @@
+@using CaalSite.Content
+
+<article class="feature-card" data-reveal>
+    <span class="feature-card__index" aria-hidden="true">@Feature.Index</span>
+    <div class="feature-card__metric">@Feature.Metric</div>
+    <h3>@Feature.Title</h3>
+    <p>@Feature.Description</p>
+</article>
+
+@code {
+    [Parameter, EditorRequired] public FeatureItem Feature { get; set; } = default!;
+}

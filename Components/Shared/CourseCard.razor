@@ -1,0 +1,28 @@
+@using CaalSite.Content
+
+<article class="course-card" data-reveal>
+    <div class="course-card__media">
+        <img src="@Course.Image"
+             alt=""
+             loading="lazy"
+             decoding="async"
+             style="object-position: @Course.ImagePosition" />
+        <span class="course-card__monogram" aria-hidden="true">@Course.Monogram</span>
+        <span class="course-card__audience">@Course.Audience</span>
+    </div>
+    <div class="course-card__body">
+        <h3>@Course.Title</h3>
+        <p>@Course.Description</p>
+        <a href="@SiteContent.WhatsAppUrl($"Olá! Gostaria de saber mais sobre {Course.Title} no CAAL.")"
+           target="_blank"
+           rel="noopener noreferrer"
+           aria-label="Conversar sobre @Course.Title pelo WhatsApp">
+            Conhecer a turma
+            <span aria-hidden="true">↗</span>
+        </a>
+    </div>
+</article>
+
+@code {
+    [Parameter, EditorRequired] public CourseItem Course { get; set; } = default!;
+}
